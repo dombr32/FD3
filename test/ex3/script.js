@@ -20,6 +20,9 @@ function formsListReady(data){
     for (let i=0; i<formAJAX.length; i++){
             const value = formAJAX[i].buttonCaption;
             const alertBut = formAJAX[i].alertText;
+
+            
+
             new PoemButton(value, alertBut);
     }
 }
@@ -28,25 +31,21 @@ function errorHandler(jqXHR,statusStr,errorStr) {
     alert(statusStr+' '+errorStr);
 }
 
+class PoemButton {
+    constructor (buttonCaption, alertText) {
+        this.buttonCaption = buttonCaption;
+        this.alertText = alertText;
+        this.buildButton()
+    };
 
-function PoemButton (buttonCaption, alertText) {
-    
-    this.buttonCaption = buttonCaption;
-    this.alertText = alertText;
-    // this.buttonPressed = function() {alert(this.alertText);}
-    console.log (this.buttonCaption);
-    console.log(this.alertText)
+    buildButton() {
+        const button = document.createElement("button");
+        button.innerHTML = this.buttonCaption;
+        document.body.appendChild(button);
+        button.addEventListener('click', this.buttonPressed.bind(this)); //с помощью bind фиксируем this
+    }
 
-    const button = document.createElement("button");
-    button.innerHTML = this.buttonCaption;
-    document.body.appendChild(button);
-
-    button.addEventListener('click', this.buttonPressed.bind(this)); //с помощью bind фиксируем this
-
+    buttonPressed() {alert(this.alertText);};
 }
 
-PoemButton.prototype.buttonPressed = function() {
-    alert(this.alertText); // Метод для вывода текста в alert
-    // console.log(this.alertText);
-};
 
